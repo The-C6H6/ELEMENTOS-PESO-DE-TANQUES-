@@ -1,5 +1,6 @@
 import flet as ft
-from UI import dropdown_tanque, dropdown_placa_horizontal_vertical
+from UI import dropdown_tanque, dropdown_placa_horizontal_vertical, distribucion_pagina
+
 
 def main(page: ft.Page):
     page.title = "Calculadora de Peso de tanques"
@@ -13,15 +14,14 @@ def main(page: ft.Page):
 
     elementos_UI={
         "dropdown_Tipo_de_tanque":dropdown_tanque(),
-        "dropdown_Placa horizontal o vertical":dropdown_placa_horizontal_vertical()
+        "dropdown_Placa horizontal o vertical":dropdown_placa_horizontal_vertical(),
+        "imagen_tanque":ft.Image(src="./assets/tanque.png", width=400, height=400),
     }
 
-    page.add(
-        ft.Text("Seleccione el tipo de tanque:"),
-        elementos_UI["dropdown_Tipo_de_tanque"],
-        ft.Text("Seleccione la orientación de la placa:"),
-        elementos_UI["dropdown_Placa horizontal o vertical"]
-    )
+    distribucion_pagina(page, elementos_UI)
+
+
+
 
 
 
