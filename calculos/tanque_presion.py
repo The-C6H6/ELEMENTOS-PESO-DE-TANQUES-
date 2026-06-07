@@ -6,13 +6,15 @@ def calculo_cuerpo_cilindrico(diametro, altura, P, S, E, C):
     num_placas_cilindro=area_cilindro/40 
     t = (P * diametro) / (2*S*E - P) + C
     peso=num_placas_cilindro*t*48
+    
 
 
 
-def calculo_tapa():
+def calculo_tapa(tipo_tapa):
     pass
 
 
 
 def calculo_fondo():
     pass    
+

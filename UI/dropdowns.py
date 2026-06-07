@@ -36,3 +36,5 @@ def dropdown_placa_horizontal_vertical(elementos_UI):
         on_select=on_seleccion,  
     )
 
+def dropdown_cabezal():
+    pass
