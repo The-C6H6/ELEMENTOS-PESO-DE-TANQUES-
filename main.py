@@ -11,6 +11,7 @@ def main(page: ft.Page):
     page.scroll = ft.ScrollMode.AUTO
     page.padding = 20
     elementos_UI = {}
+    
     variables_dinamicas={
         "E":0.85,
         "C":1/8,
