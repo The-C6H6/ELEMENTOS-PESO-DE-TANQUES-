@@ -30,31 +30,33 @@ def distribucion_pagina(page, elementos_UI):
                 ft.Text("Parámetros del tanque", size=15, weight=ft.FontWeight.BOLD, color="#2563EB"),
                 ft.Divider(height=1, color="#BFDBFE"),
                 ft.Row(controls=[
-                    ft.Column(controls=[ft.Text("Tipo de tanque", size=12, color="#6B7280"), elementos_UI["dropdown_Tipo_de_tanque"]], spacing=4, expand=1),
-                    ft.Column(controls=[ft.Text("Orientación de la placa", size=12, color="#6B7280"), elementos_UI["dropdown_Placa horizontal o vertical"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["dropdown_Tipo_de_tanque"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["dropdown_Placa horizontal o vertical"]], spacing=4, expand=1),
                 ], spacing=16),
 
                 #Modificado
                 ft.Row(controls=[
-                    ft.Column(controls=[ft.Text("Radiogradiado", size=12, color="#6B7280"), elementos_UI["dropdown_eficiencia_soldadura"]], spacing=4, expand=1),
-                    ft.Column(controls=[ft.Text("Tipo de material", size=12, color="#6B7280"), elementos_UI["Material"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["dropdown_eficiencia_soldadura"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["Material"]], spacing=4, expand=1),
                 ], spacing=16),
 
                  ft.Row(controls=[
-                    ft.Column(controls=[ft.Text("Densidad del fluido", size=12, color="#6B7280"), elementos_UI["densidad_fluido"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["densidad_fluido"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["dropdown_norma"]], spacing=4, expand=1),
                 ], spacing=16),
 
                 ft.Row(controls=[
-                    ft.Column(controls=[ft.Text("Tipo de cabezal", size=12, color="#6B7280"), elementos_UI["dropdown_cabezal"]], spacing=4, expand=1),
-                    ft.Column(controls=[ft.Text("Tipo de fondo", size=12, color="#6B7280"), elementos_UI["dropdown_tipo_fondo"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["dropdown_cabezal"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["dropdown_tipo_fondo"]], spacing=4, expand=1),
                 ], spacing=16),
                 ft.Row(controls=[
-                    ft.Column(controls=[ft.Text("Diámetro del tanque", size=12, color="#6B7280"), elementos_UI["diametro_tanque"]], spacing=4, expand=1),
-                    ft.Column(controls=[ft.Text("Altura del tanque", size=12, color="#6B7280"), elementos_UI["altura_tanque"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["diametro_tanque"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["altura_tanque"]], spacing=4, expand=1),
                 ], spacing=16),
                 ft.Row(controls=[
-                    ft.Column(controls=[ft.Text("Presión de operación", size=12, color="#6B7280"), elementos_UI["Presion_operacion"]], spacing=4, expand=1),
-                    ft.Column(controls=[ft.Text("Fatiga del material", size=12, color="#6B7280"), elementos_UI["fatiga_material"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["fatiga_material"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["Presion_operacion"]], spacing=4, expand=1),
+                    
                 ], spacing=16),
                 ft.Container(height=10),
                 elementos_UI["boton_calcular"],

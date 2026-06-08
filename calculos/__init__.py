@@ -1,1 +1,1 @@
-from .general import factor_corrosion
+from .general import factor_corrosion, espesor_tapa_no_plana

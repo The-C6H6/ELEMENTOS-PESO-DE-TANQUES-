@@ -1,7 +1,48 @@
 import flet as ft
 from calculos import factor_corrosion
 
-def dropdown_tanque():
+
+#Terminado
+def dropdown_tanque(componentes, variables_dinamicas):
+
+    def on_seleccion(e):
+        componentes['Presion_operacion'].visible=False if e.control.value=="Patm" else True
+        variables_dinamicas['Tanque']=e.control.value
+        if e.control.value=="Patm" : 
+            componentes['dropdown_cabezal'].options=[ft.DropdownOption(key="plano", text="Plano")]
+            componentes['dropdown_cabezal'].value='plano'
+            componentes['dropdown_tipo_fondo'].options=[ft.DropdownOption(key="plano", text="Plano")]
+            componentes['dropdown_tipo_fondo'].value= 'plano'
+
+            componentes['dropdown_norma'].options=[ft.DropdownOption(key="API_650", text="API 650")]
+            componentes['dropdown_norma'].value='API_650'
+            variables_dinamicas['norma']='API_650'
+
+
+        else:
+            componentes['dropdown_cabezal'].options=[
+                ft.DropdownOption(key="plano", text="Plano"),
+                ft.DropdownOption(key="eliptico", text="Elíptico"),
+                ft.DropdownOption(key="torisferico", text="Torisférico"),
+                ft.DropdownOption(key="hemisferico", text="Hemisférico"),
+                ft.DropdownOption(key="conico", text="Cónico"),
+            ]
+            componentes['dropdown_tipo_fondo'].options=[
+                ft.DropdownOption(key="plano", text="Plano"),
+                ft.DropdownOption(key="eliptico", text="Elíptico"),
+                ft.DropdownOption(key="torisferico", text="Torisférico"),
+                ft.DropdownOption(key="hemisferico", text="Hemisférico"),
+                ft.DropdownOption(key="conico", text="Cónico"),
+            ]
+
+            componentes['dropdown_norma'].options=[
+            ft.DropdownOption(key="ASME", text="ASME"),
+            ft.DropdownOption(key="API-ASME", text="API-ASME"),
+            ]
+            componentes['dropdown_norma'].value='ASME'
+            variables_dinamicas['norma']='ASME'
+
+
     return ft.Dropdown(
     width=300,
     value="P",
@@ -9,17 +50,22 @@ def dropdown_tanque():
         ft.DropdownOption(key="P", text="Tanque Sujeto a Presión"),
         ft.DropdownOption(key="Patm", text="Tanque Atmosférico"),
     ],
+    on_select=on_seleccion
 )
     
-def dropdown_placa_horizontal_vertical(elementos_UI):
+
+
+
+
+
+def dropdown_placa_horizontal_vertical(elementos_UI, variables):
     def on_seleccion(e):
-        valor = e.control.value
-        if valor == "H":
+        variables['distribucion'] = e.control.value
+        if variables['distribucion']  == "H":
             elementos_UI["imagen_placa"].src = "./assets/placa horizontal.png"
         else:
             elementos_UI["imagen_placa"].src = "./assets/placa vertical.png"
 
-        elementos_UI["pagina"].update()
 
     return ft.Dropdown(
         width=300,
@@ -30,6 +76,8 @@ def dropdown_placa_horizontal_vertical(elementos_UI):
         ],
         on_select=on_seleccion,  
     )
+
+
 
 def dropdown_cabezal():
     return ft.Dropdown(
@@ -46,16 +94,11 @@ def dropdown_cabezal():
     )
 
 
-
-
-
-
 #Terminado
 def dropdown_eficiencia_soldadura(variables):
 
     def on_seleccion(e):
         variables['E']=float(e.control.value)
-        print(variables['E'])
         
 
     return ft.Dropdown(
@@ -77,7 +120,6 @@ def dropdown_material(variables):
     def on_seleccion(e):
         corrosion=factor_corrosion(e.control.value)
         variables['C']=corrosion
-        print(variables['C'])
 
     return ft.Dropdown(
         width=300,
@@ -87,6 +129,25 @@ def dropdown_material(variables):
             ft.DropdownOption(key="carbono", text="Acero al C."),
             ft.DropdownOption(key="inox", text="Acero Inox."),
 
+
+        ],
+        on_select=on_seleccion
+    )
+
+
+def dropdown_norma(variables):
+    def on_seleccion(e):
+        variables['norma']=e.control.value
+ 
+
+      
+    return ft.Dropdown(
+        width=300,
+        value="ASME",
+        options=[
+            
+            ft.DropdownOption(key="ASME", text="ASME"),
+            ft.DropdownOption(key="API-ASME", text="API-ASME"),
 
         ],
         on_select=on_seleccion
