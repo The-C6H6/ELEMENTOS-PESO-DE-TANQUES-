@@ -1,7 +1,7 @@
-from .general import area_cc, volumen_cc, espesor_tapa_no_plana, espesor_placa_comercial
+from .general import area_cilindrica ,volumen_cc, espesor_tapa_no_plana, espesor_placa_comercial
 
 def calculo_cuerpo_cilindrico(diametro:float, altura:float, P:float, S:float, E:float, C:float):
-    area_cilindro=area_cc(diametro, altura)
+    area_cilindro=area_cilindrica(diametro, altura)
     num_placas_cilindro=area_cilindro/40 
     t = (P * diametro/12) / (2*S*E - P) + C
     t_comer=espesor_placa_comercial(t)

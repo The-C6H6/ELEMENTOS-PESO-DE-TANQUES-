@@ -2,12 +2,12 @@ import math
 
 
 
-def espesor_placa_comercial(espesor_calculado:float):
-    for i in range(1,16):
-        if espesor_calculado<= i/16:
-            return i/16
-    
-    return 1
+def espesor_placa_comercial(espesor_calculado: float):
+    for i in range(1, 17):
+        if espesor_calculado <= i / 16:
+            return i / 16
+
+    return espesor_calculado
 
 
 
@@ -36,10 +36,6 @@ def eficiencia_soldadura(tipo_radiografiado):
         return 0.7
     
 
-def area_cc(diametro, altura):
-    pi=3.1416
-    area_cilindro=pi*diametro*altura
-    return area_cilindro
 
 
 def volumen_cc(diametro, altura):
@@ -61,6 +57,68 @@ def niveles_tanque(distribucion, altura):
     else:
         return altura/10
         
+
+def placas_nivel(diametro,distribucion):
+    perimetro=perimetro_cilindrico(diametro)
+    if distribucion =='H':
+        return perimetro/10
+    else:
+        return perimetro/4
+
+
+
+def placas_totales(diametro,altura):
+    return area_cilindrica(diametro, altura)/40
+
+
+def area_cilindrica(diametro, altura):
+    return perimetro_cilindrico(diametro)*altura
+    
+
+def perimetro_cilindrico(diametro):
+    PI=3.1416
+    return PI*diametro
+
+
+
+def espesor_pared_atm(H, D,E, S, C, densidad ):
+    return (2.604 * H * D * densidad/1000) / (E * S) + C
+
+
+
+def espesores_pared_atm(H, diametro, E, S, C, densidad, distribucion):
+    t=[]
+    t_comercial=[]
+  
+    while H > 0:
+        T=espesor_pared_atm(H=H, D=diametro,E=E, S=S, C=C, densidad=densidad)
+        T_comercial=espesor_placa_comercial(T)
+        t.append(T)
+        t_comercial.append(T_comercial)
+        H-=4 if distribucion =='H'else 10
+    return t , t_comercial
+
+
+
+
+def pesos_anillos(espesor_comercial:list, nivel_calculado:float, placas_por_anillo:float):
+    w=[]
+    nivel_actual=nivel_calculado
+    for espesor in espesor_comercial:
+        if nivel_actual <= 0:
+            break
+        if nivel_actual<1:
+            w_anillo=48*(espesor*16)*placas_por_anillo*nivel_actual
+            w.append(w_anillo) 
+            return w
+
+        w_anillo=48*(espesor*16)*placas_por_anillo
+        w.append(w_anillo)
+        nivel_actual-=1
+    return w 
+
+
+    
 
 
 
