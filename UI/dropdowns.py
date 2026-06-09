@@ -53,11 +53,7 @@ def dropdown_tanque(componentes, variables_dinamicas):
     on_select=on_seleccion
 )
     
-
-
-
-
-
+#Terminado
 def dropdown_placa_horizontal_vertical(elementos_UI, variables):
     def on_seleccion(e):
         variables['distribucion'] = e.control.value
@@ -77,12 +73,14 @@ def dropdown_placa_horizontal_vertical(elementos_UI, variables):
         on_select=on_seleccion,  
     )
 
+#Terminado
+def dropdown_cabezal(variables):
 
+    def on_seleccion(e):
+        variables['cabezal']=e.control.value
 
-def dropdown_cabezal():
     return ft.Dropdown(
         width=300,
-
         value='plano',
         options=[
             ft.DropdownOption(key="plano", text="Plano"),
@@ -91,8 +89,27 @@ def dropdown_cabezal():
             ft.DropdownOption(key="hemisferico", text="Hemisférico"),
             ft.DropdownOption(key="conico", text="Cónico"),
         ],
+        on_select=on_seleccion
     )
 
+#Terminado
+def dropdown_fondo(variables):
+
+    def on_seleccion(e):
+        variables['fondo']=e.control.value
+
+    return ft.Dropdown(
+        width=300,
+        value='plano',
+        options=[
+            ft.DropdownOption(key="plano", text="Plano"),
+            ft.DropdownOption(key="eliptico", text="Elíptico"),
+            ft.DropdownOption(key="torisferico", text="Torisférico"),
+            ft.DropdownOption(key="hemisferico", text="Hemisférico"),
+            ft.DropdownOption(key="conico", text="Cónico"),
+        ],
+        on_select=on_seleccion
+    )
 
 #Terminado
 def dropdown_eficiencia_soldadura(variables):
@@ -134,7 +151,7 @@ def dropdown_material(variables):
         on_select=on_seleccion
     )
 
-
+#Terminado
 def dropdown_norma(variables):
     def on_seleccion(e):
         variables['norma']=e.control.value

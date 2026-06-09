@@ -1,5 +1,5 @@
 import flet as ft
-from UI import dropdown_material ,dropdown_tanque, dropdown_placa_horizontal_vertical, distribucion_pagina, dropdown_cabezal, dropdown_eficiencia_soldadura, dropdown_norma
+from UI import dropdown_material ,dropdown_tanque, dropdown_placa_horizontal_vertical, distribucion_pagina, dropdown_cabezal, dropdown_eficiencia_soldadura, dropdown_norma, dropdown_fondo
 from UI import tf_diametro_tanque, tf_altura_tanque, tf_presion_operacion, tf_fatiga_material, tf_densidad_fluido
 from UI import boton_calcular
 
@@ -22,7 +22,9 @@ def main(page: ft.Page):
         "densidad_fluido":None,
         "Tanque":"P",
         "norma":"ASME",
-        "distribucion":'H'
+        "distribucion":'H', 
+        'cabezal':'plano',
+        'fondo':'plano'
 
     }
 
@@ -39,8 +41,8 @@ def main(page: ft.Page):
     elementos_UI["altura_tanque"]=tf_altura_tanque(variables_dinamicas)
     elementos_UI["Presion_operacion"]=tf_presion_operacion(variables_dinamicas)
     elementos_UI["fatiga_material"]=tf_fatiga_material(variables_dinamicas)
-    elementos_UI["dropdown_cabezal"]=dropdown_cabezal()
-    elementos_UI["dropdown_tipo_fondo"]=dropdown_cabezal()
+    elementos_UI["dropdown_cabezal"]=dropdown_cabezal(variables_dinamicas)
+    elementos_UI["dropdown_tipo_fondo"]=dropdown_fondo(variables_dinamicas)
     elementos_UI["boton_calcular"]=boton_calcular()
     elementos_UI["dropdown_eficiencia_soldadura"]=dropdown_eficiencia_soldadura(variables_dinamicas)
     elementos_UI['densidad_fluido']=tf_densidad_fluido(variables_dinamicas)
