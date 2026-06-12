@@ -49,6 +49,8 @@ def distribucion_pagina(page, elementos_UI):
                     ft.Column(controls=[elementos_UI["dropdown_cabezal"]], spacing=4, expand=1),
                     ft.Column(controls=[elementos_UI["dropdown_tipo_fondo"]], spacing=4, expand=1),
                 ], spacing=16),
+
+
                 ft.Row(controls=[
                     ft.Column(controls=[elementos_UI["diametro_tanque"]], spacing=4, expand=1),
                     ft.Column(controls=[elementos_UI["altura_tanque"]], spacing=4, expand=1),
@@ -58,6 +60,17 @@ def distribucion_pagina(page, elementos_UI):
                     ft.Column(controls=[elementos_UI["Presion_operacion"]], spacing=4, expand=1),
                     
                 ], spacing=16),
+
+                    ft.Row(controls=[
+                    ft.Column(controls=[elementos_UI["angulo_cabezal"]], spacing=4, expand=1),
+                    ft.Column(controls=[elementos_UI["angulo_fondo"]], spacing=4, expand=1),
+                    
+                ], spacing=16),
+
+
+
+
+
                 ft.Container(height=10),
                 elementos_UI["boton_calcular"],
             ],

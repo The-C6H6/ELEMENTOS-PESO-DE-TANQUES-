@@ -36,3 +36,18 @@ def tf_densidad_fluido(variables):
         variables['densidad_fluido']=e.control.value
     return ft.TextField(label="Densidad del fluido en kg/m³", width=300,
                         on_change=on_change_func)
+
+
+def tf_angulo_tapa(variables):
+    def on_change_func(e):
+        variables['angulo fondo']=e.control.value
+
+    return ft.TextField(label="Ángulo del fondo en grados", width=300, visible=False,
+                        on_change=on_change_func, value='0')
+
+def tf_angulo_cabezal(variables):
+    def on_change_func(e):
+        variables['angulo cabezal']=e.control.value
+    return ft.TextField(label="Ángulo del cabezal en grados", width=300, visible=False,
+                        on_change=on_change_func, value='0')
+

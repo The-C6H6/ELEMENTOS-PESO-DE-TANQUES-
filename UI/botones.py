@@ -43,9 +43,14 @@ def agregar_pasos(elementos_UI, pasos: list[dict]):
     elementos_UI["pagina"].update()
 
 
-def boton_calcular():
+
+
+
+def boton_calcular(elementos_UI, pasos):
+    def boton_presionado(e):
+        agregar_pasos(elementos_UI, pasos)
     return ft.Button(content="Calcular", width=300, height=40, bgcolor="#007bff", color="white", 
-                     )
+                     on_click=boton_presionado)
 
 
 

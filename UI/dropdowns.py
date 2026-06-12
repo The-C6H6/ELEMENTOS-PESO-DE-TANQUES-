@@ -11,6 +11,8 @@ def dropdown_tanque(componentes, variables_dinamicas):
         if e.control.value=="Patm" : 
             componentes['dropdown_cabezal'].options=[ft.DropdownOption(key="plano", text="Plano")]
             componentes['dropdown_cabezal'].value='plano'
+            componentes['angulo_cabezal'].visible=True 
+
             componentes['dropdown_tipo_fondo'].options=[ft.DropdownOption(key="plano", text="Plano")]
             componentes['dropdown_tipo_fondo'].value= 'plano'
 
@@ -20,6 +22,7 @@ def dropdown_tanque(componentes, variables_dinamicas):
 
 
         else:
+            componentes['angulo_cabezal'].visible=False 
             componentes['dropdown_cabezal'].options=[
                 ft.DropdownOption(key="plano", text="Plano"),
                 ft.DropdownOption(key="eliptico", text="Elíptico"),
@@ -46,6 +49,7 @@ def dropdown_tanque(componentes, variables_dinamicas):
     return ft.Dropdown(
     width=300,
     value="P",
+    label='Tipo de tanque',
     options=[
         ft.DropdownOption(key="P", text="Tanque Sujeto a Presión"),
         ft.DropdownOption(key="Patm", text="Tanque Atmosférico"),
@@ -65,6 +69,7 @@ def dropdown_placa_horizontal_vertical(elementos_UI, variables):
 
     return ft.Dropdown(
         width=300,
+        label='Distribución de la placa',
         value="H",
         options=[
             ft.DropdownOption(key="H", text="Placa Horizontal"),
@@ -74,13 +79,24 @@ def dropdown_placa_horizontal_vertical(elementos_UI, variables):
     )
 
 #Terminado
-def dropdown_cabezal(variables):
+def dropdown_cabezal(variables, elementos_UI):
 
     def on_seleccion(e):
+        
         variables['cabezal']=e.control.value
+        if e.control.value=='conico':
+            elementos_UI['angulo_cabezal'].visible=True
+
+        elif variables['Tanque']=='Patm' and elementos_UI['dropdown_cabezal'].value=='plano':
+            elementos_UI['angulo_cabezal'].visible=True 
+    
+        else:
+           elementos_UI['angulo_cabezal'].visible=False 
+
 
     return ft.Dropdown(
         width=300,
+        label='Tipo de cabezal',
         value='plano',
         options=[
             ft.DropdownOption(key="plano", text="Plano"),
@@ -93,14 +109,21 @@ def dropdown_cabezal(variables):
     )
 
 #Terminado
-def dropdown_fondo(variables):
+def dropdown_fondo(variables, elementos_UI):
 
     def on_seleccion(e):
-        variables['fondo']=e.control.value
+        variables['cabezal']=e.control.value
+        if e.control.value=='conico':
+            elementos_UI['angulo_fondo'].visible=True
+
+        
+        else:
+           elementos_UI['angulo_fondo'].visible=False 
 
     return ft.Dropdown(
         width=300,
         value='plano',
+        label='Tipo de fondo',
         options=[
             ft.DropdownOption(key="plano", text="Plano"),
             ft.DropdownOption(key="eliptico", text="Elíptico"),
@@ -121,6 +144,7 @@ def dropdown_eficiencia_soldadura(variables):
     return ft.Dropdown(
         width=300,
         value="0.85",
+        label='Radiografiado',
         options=[
             
             ft.DropdownOption(key="1.00", text="Radiografiado 100%"),
@@ -140,6 +164,7 @@ def dropdown_material(variables):
 
     return ft.Dropdown(
         width=300,
+        label='Material',
         value="carbono",
         options=[
             
@@ -161,6 +186,7 @@ def dropdown_norma(variables):
     return ft.Dropdown(
         width=300,
         value="ASME",
+        label='Norma',
         options=[
             
             ft.DropdownOption(key="ASME", text="ASME"),

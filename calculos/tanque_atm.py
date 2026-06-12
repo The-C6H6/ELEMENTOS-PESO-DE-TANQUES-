@@ -2,7 +2,7 @@ from .general import base_tapa_plana_criterio, niveles_tanque, placas_totales, p
 import math 
 
 #Terminado
-def calculo_cuerpo_cilindrico(distribucion, diametro, altura, E, S, C, densidad):
+def calculo_cuerpo_cilindrico_p_atm(distribucion, diametro, altura, E, S, C, densidad):
     niveles =  niveles_tanque(distribucion, altura)  
     niveles_rounded=math.ceil(niveles)
     placas=placas_totales(diametro=diametro, altura=altura)
@@ -14,6 +14,7 @@ def calculo_cuerpo_cilindrico(distribucion, diametro, altura, E, S, C, densidad)
     pesos_por_anillo=pesos_anillos(espesor_comercial=t_comercial, nivel_calculado=niveles, placas_por_anillo=placas_anillo)
     peso_total_cc=sum(pesos_por_anillo)
     return{
+        'Título':'valores',
         'niveles':niveles,
         'niveles reales':niveles_rounded,
         'placas totales':placas,
@@ -21,6 +22,7 @@ def calculo_cuerpo_cilindrico(distribucion, diametro, altura, E, S, C, densidad)
         'perimetro':perimetro,
         'area cuerpo':area_cuerpo,
         'volumen total':volumen_total,
+        "volumen_fluido": 0.8 * volumen_total,
         'placas anillo':placas_anillo,
         'placas anillo redondeadas': math.ceil(placas_anillo),
         'pesos de cada anillo':pesos_por_anillo,
@@ -31,7 +33,7 @@ def calculo_cuerpo_cilindrico(distribucion, diametro, altura, E, S, C, densidad)
 
 
 #Terminado
-def calculo_tapa(diametro, c, angulo=0):
+def calculo_tapa_p_atm(diametro, c, angulo=0):
     if angulo==0 or angulo is None or angulo=='':
         tipo_tapa='Plana'
         longitud = base_tapa_plana_criterio(diametro)
@@ -47,6 +49,7 @@ def calculo_tapa(diametro, c, angulo=0):
     peso=num_placas*(espesor*16)*48
 
     return{
+        'Título':'valores',
         "longitud":longitud,
         "tipo tapa": tipo_tapa,
         "area":area,
@@ -67,6 +70,7 @@ def calculo_fondo(diametro, c):
     peso=num_placas*(espesor*16)*48
 
     return{
+        'Título':'valores',
         "longitud":longitud,
         "area":area,
         "placas totales":num_placas,
