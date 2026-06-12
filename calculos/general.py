@@ -131,7 +131,6 @@ def espesor_tapa_presion(tipo_tapa, norma, P, D, S, E, C, alpha_grados=0):
     # TAPA TORIESFÉRICA
     # -------------------------------
     elif tipo_tapa in ("torisferico", "toriesferico"):
-
         if norma == "ASME":
             denominador = S * E - (0.1 * P)
 

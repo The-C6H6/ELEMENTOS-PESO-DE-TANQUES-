@@ -153,8 +153,8 @@ def _pasos_presion(
             "resultado": f"N = {_fmt(cuerpo['num_placas'], 'placas')}",
         },
         {
-            "formula": "Espesor del cuerpo: t = (P·D/12) / (2·S·E - P) + C",
-            "valor": f"t = ({_fmt(p_diseno, 'psi')} × {_fmt(diametro, 'ft')} / 12) / (2 × {_fmt(esfuerzo, 'psi')} × {eficiencia} - {_fmt(p_diseno, 'psi')}) + {_fmt(corrosion, 'in')}",
+            "formula": "Espesor del cuerpo: t = (P·D·[12ft/in] ) / (2·S·E - P) + C",
+            "valor": f"t = ({_fmt(p_diseno, 'psi')} × {_fmt(diametro, 'ft')} × 12) / (2 × {_fmt(esfuerzo, 'psi')} × {eficiencia} - {_fmt(p_diseno, 'psi')}) + {_fmt(corrosion, 'in')}",
             "resultado": f"t mínimo = {_fmt(cuerpo['espesor'], 'in')} → t comercial = {_fmt(cuerpo.get('espesor_comercial'), 'in')}",
         },
         {
@@ -164,24 +164,51 @@ def _pasos_presion(
         },
         {
             "formula": "Volumen total: V = (π·D²/4)·H; volumen de fluido = 0.8·V",
-            "valor": f"V = (3.1416 × {_fmt(diametro, 'ft')}² / 4) × {_fmt(altura, 'ft')}",
+            "valor": f"V = (3.1416 × ({_fmt(diametro, 'ft')})² / 4) × {_fmt(altura, 'ft')}",
             "resultado": f"V = {_fmt(cuerpo['volumen_total'], 'ft³')} ; Vfluido = {_fmt(cuerpo['volumen_fluido'], 'ft³')}",
         },
         {
-            "formula": "Peso del fluido: Wf = Vfluido·(ρ·0.0283168)",
-            "valor": f"Wf = {_fmt(cuerpo['volumen_fluido'], 'ft³')} × ({_fmt(densidad, 'kg/m³')} × 0.0283168)",
+            "formula": "Peso del fluido: Wf = Vfluido·(ρ·0.0283168 m³/ft³)",
+            "valor": f"Wf = {_fmt(cuerpo['volumen_fluido'], 'ft³')} × ({_fmt(densidad, 'kg/m³')} × 0.0283168 m³/ft³)",
             "resultado": f"Wf = {_fmt(peso_fluido, 'kg')}",
         },
         {
             "formula": f"Espesor del cabezal ({variables['cabezal']}) según {variables['norma']}",
             "valor": f"Se evalúa la fórmula del tipo de cabezal con P={_fmt(p_diseno, 'psi')}, D={_fmt(diametro, 'ft')}, S={_fmt(esfuerzo, 'psi')}, E={eficiencia}, C={_fmt(corrosion, 'in')}",
-            "resultado": f"t = {_fmt(cabezal['espesor calculado'], 'in')} → t comercial = {_fmt(cabezal['espesor comercial'], 'in')}; peso = {_fmt(cabezal['peso'], 'kg')}",
+            "resultado": f"t = {_fmt(cabezal['espesor calculado'], 'in')} → t comercial = {_fmt(cabezal['espesor comercial'], 'in')}",
         },
         {
             "formula": f"Espesor del fondo ({variables['fondo']}) según {variables['norma']}",
             "valor": f"Se evalúa la fórmula del tipo de fondo con P={_fmt(p_diseno, 'psi')}, D={_fmt(diametro, 'ft')}, S={_fmt(esfuerzo, 'psi')}, E={eficiencia}, C={_fmt(corrosion, 'in')}",
-            "resultado": f"t = {_fmt(fondo['espesor calculado'], 'in')} → t comercial = {_fmt(fondo['espesor comercial'], 'in')}; peso = {_fmt(fondo['peso'], 'kg')}",
+            "resultado": f"t = {_fmt(fondo['espesor calculado'], 'in')} → t comercial = {_fmt(fondo['espesor comercial'], 'in')}",
         },
+
+        {
+            "formula": f"Placas del cabezal ({variables['cabezal']}) ",
+            "valor": f"Se evalúa el área del cabezal con A = π(a² + h²) para tapas no planas; Se considera h = 10 in ; a = Rcc = {diametro/2:.4f}",
+            "resultado": f"Área = {_fmt(cabezal['area'], 'ft²')}\n Nplacas = {_fmt(cabezal['area'], 'ft²')}/40ft² = {cabezal['placas totales']:.4f} ",
+        },
+        {
+           "formula": f"Placas del fondo ({variables['fondo']}) ",
+            "valor": f"Se evalúa el área del fondo con A = π(a² + h²) para tapas no planas; Se considera h = 10 in ; a = Rcc = {diametro/2:.4f}",
+            "resultado": f"Área = {_fmt(fondo['area'], 'ft²')}\n Nplacas = {_fmt(fondo['area'], 'ft²')}/40ft² = {fondo['placas totales']:.4f} ",
+        },
+
+
+        {
+            "formula": f"Peso total del cabezal ({variables['cabezal']}) = \n48Kg·(t comercial·16·Nplacas) ",
+            "valor": f"Peso = 48Kg·({_fmt(cabezal['espesor comercial'], '')} · 16) · {_fmt(cabezal['placas totales'], '')}",
+            "resultado": f"Peso = {_fmt(cabezal['peso'], 'Kg')}",
+        },
+        {
+           "formula": f"Peso total del fondo ({variables['fondo']}) ",
+            "valor": f"Peso = 48Kg·({_fmt(fondo['espesor comercial'], '')} · 16) · {_fmt(fondo['placas totales'], '')}",
+            "resultado": f"Peso = {_fmt(fondo['peso'], 'Kg')}",
+        },
+
+
+
+
         {
             "formula": "Peso total del tanque: W = Wcuerpo + Wcabezal + Wfondo + Wfluido",
             "valor": f"W = {_fmt(cuerpo['peso'], 'kg')} + {_fmt(cabezal['peso'], 'kg')} + {_fmt(fondo['peso'], 'kg')} + {_fmt(peso_fluido, 'kg')}",
@@ -233,7 +260,7 @@ def _pasos_atmosferico(variables, cuerpo, cabezal, fondo, peso_fluido, peso_tota
             "resultado": f"V = {_fmt(cuerpo['volumen total'], 'ft³')} \n Vfluido = {_fmt(cuerpo['volumen_fluido'], 'ft³')}",
         },
         {
-            "formula": "Peso del fluido: Wf = Vfluido·(ρ·0.0283168)",
+            "formula": "Peso del fluido: Wf = Vfluido·(ρ·0.0283168 m³/ft³)",
             "valor": f"Wf = {_fmt(cuerpo['volumen_fluido'], 'ft³')} × ({_fmt(densidad, 'kg/m³')} × 0.0283168)\n",
             "resultado": f"Wf = {_fmt(peso_fluido, 'kg')}",
         },
