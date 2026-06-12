@@ -197,57 +197,59 @@ def _pasos_atmosferico(variables, cuerpo, cabezal, fondo, peso_fluido, peso_tota
     densidad = _a_float(variables["densidad_fluido"], "densidad del fluido")
     eficiencia = variables["E"]
     corrosion = variables["C"]
+    longitud_base_techo=fondo['longitud']
     paso_altura = 4 if variables["distribucion"] == "H" else 10
+    ancho_placa=10 if variables["distribucion"] == "H" else 4
 
     return [
         {
-            "formula": "Perímetro y área del cuerpo: Pm = π·D; A = Pm·H",
-            "valor": f"Pm = 3.1416 × {_fmt(diametro, 'ft')} ; A = {_fmt(cuerpo['perimetro'], 'ft')} × {_fmt(altura, 'ft')}",
-            "resultado": f"Pm = {_fmt(cuerpo['perimetro'], 'ft')} ; A = {_fmt(cuerpo['area cuerpo'], 'ft²')}",
+            "formula": "Perímetro y área del cuerpo: \n Pm = π·D\n A = Pm·H",
+            "valor": f"Pm = 3.1416 × {_fmt(diametro, 'ft')} \n A = {_fmt(cuerpo['perimetro'], 'ft')} × {_fmt(altura, 'ft')}\n",
+            "resultado": f"Pm = {_fmt(cuerpo['perimetro'], 'ft')} \n A = {_fmt(cuerpo['area cuerpo'], 'ft²')}",
         },
         {
-            "formula": "Niveles/anillos: n = H / paso de placa",
-            "valor": f"n = {_fmt(altura, 'ft')} / {paso_altura} ft",
-            "resultado": f"n calculado = {_fmt(cuerpo['niveles'])}; n real = {cuerpo['niveles reales']}",
+            "formula": "Niveles/anillos: \nn = H / paso de placa",
+            "valor": f"n = {_fmt(altura, 'ft')} / {paso_altura} ft\n",
+            "resultado": f"n calculado = {_fmt(cuerpo['niveles'])} \n n real = {cuerpo['niveles reales']}",
         },
         {
-            "formula": "Placas: Ntotal = A / 40; Nanillo = perímetro / ancho de placa",
-            "valor": f"Ntotal = {_fmt(cuerpo['area cuerpo'], 'ft²')} / 40",
-            "resultado": f"Ntotal = {_fmt(cuerpo['placas totales'])}; Nanillo = {_fmt(cuerpo['placas anillo'])}",
+            "formula": "Placas: \nNtotal = A / 40 \nNanillo = perímetro / ancho de placa",
+            "valor": f"Ntotal = {_fmt(cuerpo['area cuerpo'], 'ft²')} / 40\n Nanillo = {_fmt(cuerpo['perimetro'], 'ft')} / {ancho_placa}ft\n",
+            "resultado": f"Ntotal = {_fmt(cuerpo['placas totales'])}\n Nanillo = {_fmt(cuerpo['placas anillo'])}",
         },
         {
-            "formula": "Espesores por nivel: t = (2.604·H·D·ρ/1000)/(E·S) + C",
-            "valor": f"Con D={_fmt(diametro, 'ft')}, ρ={_fmt(densidad, 'kg/m³')}, E={eficiencia}, S={_fmt(esfuerzo, 'psi')}, C={_fmt(corrosion, 'in')}",
-            "resultado": f"t mínimos = [{_fmt_lista(cuerpo['espesores minimos'], 'in')}]; t comerciales = [{_fmt_lista(cuerpo['espesores comerciales'], 'in')}]",
+            "formula": "Espesores por nivel: \nt = (2.604·H·D·ρ/1000)/(E·S) + C",
+            "valor": f"Con \nD={_fmt(diametro, 'ft')}, \nρ={_fmt(densidad, 'kg/m³')}, \nE={eficiencia}, \nS={_fmt(esfuerzo, 'psi')}, \nC={_fmt(corrosion, 'in')}\n",
+            "resultado": f"t mínimos = [{_fmt_lista(cuerpo['espesores minimos'], 'in')}] \nt comerciales = [{_fmt_lista(cuerpo['espesores comerciales'], 'in')}]",
         },
         {
-            "formula": "Peso por anillo: Wanillo = 48·(t comercial·16)·Nanillo·fracción de nivel",
-            "valor": "Se calcula para cada nivel y se suman los anillos.",
-            "resultado": f"Pesos por anillo = [{_fmt_lista(cuerpo['pesos de cada anillo'], 'kg')}]; Wcuerpo = {_fmt(cuerpo['peso cc'], 'kg')}",
+            "formula": "Peso por anillo: \n Wanillo = 48Kg·(t comercial·16)·Nanillo",
+            "valor": "Se calcula para cada nivel y se suman los anillos.\n",
+            "resultado": f"Pesos por anillo = [{_fmt_lista(cuerpo['pesos de cada anillo'], 'kg')}]\nWcuerpo = {_fmt(cuerpo['peso cc'], 'kg')}",
         },
         {
-            "formula": "Volumen total: V = (π·D²/4)·H; volumen de fluido = 0.8·V",
-            "valor": f"V = (3.1416 × {_fmt(diametro, 'ft')}² / 4) × {_fmt(altura, 'ft')}",
-            "resultado": f"V = {_fmt(cuerpo['volumen total'], 'ft³')} ; Vfluido = {_fmt(cuerpo['volumen_fluido'], 'ft³')}",
+            "formula": "Volumen total:\n V = (π·D²/4)·H \n volumen de fluido = 0.8·V",
+            "valor": f"V = (3.1416 × {_fmt(diametro, 'ft')}² / 4) × {_fmt(altura, 'ft')}\n",
+            "resultado": f"V = {_fmt(cuerpo['volumen total'], 'ft³')} \n Vfluido = {_fmt(cuerpo['volumen_fluido'], 'ft³')}",
         },
         {
             "formula": "Peso del fluido: Wf = Vfluido·(ρ·0.0283168)",
-            "valor": f"Wf = {_fmt(cuerpo['volumen_fluido'], 'ft³')} × ({_fmt(densidad, 'kg/m³')} × 0.0283168)",
+            "valor": f"Wf = {_fmt(cuerpo['volumen_fluido'], 'ft³')} × ({_fmt(densidad, 'kg/m³')} × 0.0283168)\n",
             "resultado": f"Wf = {_fmt(peso_fluido, 'kg')}",
         },
         {
             "formula": "Tapa atmosférica: plana si ángulo = 0; cónica si hay ángulo",
-            "valor": f"Área = {_fmt(cabezal['area'], 'ft²')}; placas = área / 40; espesor = 1/16 + C",
-            "resultado": f"Tipo = {cabezal['tipo tapa']}; t = {_fmt(cabezal['espesor'], 'in')}; peso = {_fmt(cabezal['peso'], 'kg')}",
+            "valor": f"Área = {_fmt(cabezal['area'], 'ft²')}\n placas = área / 40 = {_fmt(cabezal['area'], 'ft²')}/40ft² = {cabezal['placas totales']:.4f} \nespesor = 1/16 + {corrosion}\nPeso = {cabezal['placas totales']:.4f} · {(corrosion+1/16)*16} · 48 Kg\n",
+            "resultado": f"Tipo = {cabezal['tipo tapa']} \nt = {_fmt(cabezal['espesor'], 'in')}\nPlacas = {cabezal['placas totales']:.4f}\nPeso = {_fmt(cabezal['peso'], 'kg')}",
         },
         {
-            "formula": "Fondo atmosférico: área = longitud²; espesor = 1/4 + C",
-            "valor": f"Área = {_fmt(fondo['area'], 'ft²')}; placas = área / 40",
-            "resultado": f"t = {_fmt(fondo['espesor'], 'in')}; peso = {_fmt(fondo['peso'], 'kg')}",
+            "formula": "Fondo atmosférico: área = longitud² \nespesor = 1/4 + C",
+            "valor": f"Área =({_fmt(fondo['longitud'], 'ft')})²={_fmt(fondo['area'], 'ft²')} \nplacas = {fondo['area']:.4f} / 40 = {fondo['placas totales']:.4f}\n",
+            "resultado": f"t =  1/4 + {corrosion} = {_fmt(fondo['espesor'], 'in')} \npeso = {_fmt(fondo['peso'], 'kg')}",
         },
         {
             "formula": "Peso total del tanque: W = Wcuerpo + Wtapa + Wfondo + Wfluido",
-            "valor": f"W = {_fmt(cuerpo['peso cc'], 'kg')} + {_fmt(cabezal['peso'], 'kg')} + {_fmt(fondo['peso'], 'kg')} + {_fmt(peso_fluido, 'kg')}",
+            "valor": f"W = {_fmt(cuerpo['peso cc'], 'kg')} + {_fmt(cabezal['peso'], 'kg')} + {_fmt(fondo['peso'], 'kg')} + {_fmt(peso_fluido, 'kg')}\n",
             "resultado": f"Wtotal = {_fmt(peso_total, 'kg')}",
         },
     ]
