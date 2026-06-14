@@ -33,7 +33,7 @@ def calculo_cuerpo_cilindrico_p_atm(distribucion, diametro, altura, E, S, C, den
 
 
 #Terminado
-def calculo_tapa_p_atm(diametro, c, angulo=0):
+def calculo_tapa_p_atm(diametro, c, angulo:float=0):
     if angulo==0 or angulo is None or angulo=='':
         tipo_tapa='Plana'
         longitud = base_tapa_plana_criterio(diametro)

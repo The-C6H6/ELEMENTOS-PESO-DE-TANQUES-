@@ -240,12 +240,12 @@ def _pasos_atmosferico(variables, cuerpo, cabezal, fondo, peso_fluido, peso_tota
             "resultado": f"n calculado = {_fmt(cuerpo['niveles'])} \n n real = {cuerpo['niveles reales']}",
         },
         {
-            "formula": "Placas: \nNtotal = A / 40 \nNanillo = perímetro / ancho de placa",
-            "valor": f"Ntotal = {_fmt(cuerpo['area cuerpo'], 'ft²')} / 40\n Nanillo = {_fmt(cuerpo['perimetro'], 'ft')} / {ancho_placa}ft\n",
-            "resultado": f"Ntotal = {_fmt(cuerpo['placas totales'])}\n Nanillo = {_fmt(cuerpo['placas anillo'])}",
+            "formula": "Placas: \nPlacas totales = A / 40 \nPlacas por anillo = perímetro / ancho de placa",
+            "valor": f"Placas totales = {_fmt(cuerpo['area cuerpo'], 'ft²')} / 40\n Placas por anillo = {_fmt(cuerpo['perimetro'], 'ft')} / {ancho_placa}ft\n",
+            "resultado": f"Placas totales = {_fmt(cuerpo['placas totales'])}\n Placas por anillo = {_fmt(cuerpo['placas anillo'])}",
         },
         {
-            "formula": "Espesores por nivel: \nt = (2.604·H·D·ρ/1000)/(E·S) + C",
+            "formula": "Espesores por nivel: \nt = (2.604·H·D·G.S)/(E·S) + C",
             "valor": f"Con \nD={_fmt(diametro, 'ft')}, \nρ={_fmt(densidad, 'kg/m³')}, \nE={eficiencia}, \nS={_fmt(esfuerzo, 'psi')}, \nC={_fmt(corrosion, 'in')}\n",
             "resultado": f"t mínimos = [{_fmt_lista(cuerpo['espesores minimos'], 'in')}] \nt comerciales = [{_fmt_lista(cuerpo['espesores comerciales'], 'in')}]",
         },
@@ -265,7 +265,7 @@ def _pasos_atmosferico(variables, cuerpo, cabezal, fondo, peso_fluido, peso_tota
             "resultado": f"Wf = {_fmt(peso_fluido, 'kg')}",
         },
         {
-            "formula": "Tapa atmosférica: plana si ángulo = 0; cónica si hay ángulo",
+            "formula": "Tapa atmosférica: plana si ángulo = 0; cónica si hay ángulo\n",
             "valor": f"Área = {_fmt(cabezal['area'], 'ft²')}\n placas = área / 40 = {_fmt(cabezal['area'], 'ft²')}/40ft² = {cabezal['placas totales']:.4f} \nespesor = 1/16 + {corrosion}\nPeso = {cabezal['placas totales']:.4f} · {(corrosion+1/16)*16} · 48 Kg\n",
             "resultado": f"Tipo = {cabezal['tipo tapa']} \nt = {_fmt(cabezal['espesor'], 'in')}\nPlacas = {cabezal['placas totales']:.4f}\nPeso = {_fmt(cabezal['peso'], 'kg')}",
         },
@@ -377,3 +377,6 @@ def boton_calcular(elementos_UI, variables):
         color="white",
         on_click=boton_presionado,
     )
+
+
+

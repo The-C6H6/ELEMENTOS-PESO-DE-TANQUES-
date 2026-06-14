@@ -113,7 +113,7 @@ def pesos_anillos(
 
 # Útil en sujeto a presión
 # Faltan consideraciones
-def espesor_tapa_presion(tipo_tapa, norma, P, D, S, E, C, alpha_grados=0):
+def espesor_tapa_presion(tipo_tapa, norma, P, D, S, E, C, alpha_grados:float=0):
     c = 0.2
     # -------------------------------
     # TAPA ELÍPTICA
